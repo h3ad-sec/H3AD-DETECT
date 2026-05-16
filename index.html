@@ -248,6 +248,7 @@
       <div class="nav-divider"></div>
       <a href="https://h3ad-sec.github.io" target="_blank" rel="noopener">HOME</a>
       <div class="nav-divider"></div>
+      <a href="https://h3ad-sec.github.io/H3AD/" target="_blank" rel="noopener">H3AD</a>
       <div class="nav-item">
         <a href="https://h3ad-sec.github.io/H3AD-X/" target="_blank" rel="noopener">H3AD-X</a>
         <div class="nav-dropdown"><div class="nav-dropdown-inner">
@@ -289,6 +290,7 @@
 
   <div class="nav-drawer" id="navDrawer">
     <a href="https://h3ad-sec.github.io" target="_blank" rel="noopener" onclick="closeDrawer()">HOME ↗</a>
+    <a href="https://h3ad-sec.github.io/H3AD/" target="_blank" rel="noopener" onclick="closeDrawer()">H3AD ↗</a>
     <a href="https://h3ad-sec.github.io/H3AD-X/" target="_blank" rel="noopener" onclick="closeDrawer()">H3AD-X ↗</a>
     <a href="https://h3ad-sec.github.io/X-VERDIKT/" target="_blank" rel="noopener" onclick="closeDrawer()" class="drawer-sub">↳ X-VERDIKT ↗</a>
     <a href="https://h3ad-sec.github.io/PARSE-X/" target="_blank" rel="noopener" onclick="closeDrawer()" class="drawer-sub">↳ PARSE-X ↗</a>
@@ -318,13 +320,13 @@
       <div class="status-dot partial"></div>
       <span class="status-text partial">PARTIAL</span>
       <span class="status-sep">//</span>
-      <span class="status-meta">TRACER — QUERY ARSENAL LIVE</span>
+      <span class="status-meta">TRACERULES — QUERY ARSENAL LIVE</span>
     </div>
 
     <div class="terminal-block">
       <div class="term-line"><span class="term-prompt">$</span><span class="term-cmd">h3addetect --status</span></div>
       <div class="term-line"><span class="term-prompt">&gt;</span><span class="term-out">Module: <span class="term-accent">H3AD-DETECT</span> — Detection Engineering</span></div>
-      <div class="term-line"><span class="term-prompt">&gt;</span><span class="term-out">TRACER: <span class="term-accent">LIVE</span> — KQL · Sigma · XQL query arsenal with MITRE ATT&CK tagging</span></div>
+      <div class="term-line"><span class="term-prompt">&gt;</span><span class="term-out">TRACERULES: <span class="term-accent">LIVE</span> — KQL · Sigma · XQL query arsenal with MITRE ATT&CK tagging</span></div>
       <div class="term-line"><span class="term-prompt">&gt;</span><span class="term-comment"># Write detections against how adversaries operate — behavior-first, noise-aware.</span></div>
     </div>
 
@@ -388,7 +390,7 @@
     const chars = ['KQL', 'Sigma', 'XQL', 'YARA', 'ATT&CK', 'T1059', 'T1003', 'T1047', 'T1566', 'T1071',
       'T1055', 'T1082', 'T1021', 'T1053', 'T1078', 'Detect', 'Alert', 'Rule', 'Query', 'Baseline',
       'SIEM', 'EDR', 'EventLog', '4688', '4624', '4625', '4768', 'Sysmon', 'ETW', 'DeviceEvents',
-      'TRACER', 'H3AD-DETECT', 'H3AD-SEC', 'TA0002', 'TA0003', 'TA0006', 'TA0008', 'TA0011',
+      'TRACERULES', 'H3AD-DETECT', 'H3AD-SEC', 'TA0002', 'TA0003', 'TA0006', 'TA0008', 'TA0011',
       'Execution', 'Persistence', 'LateralMove', 'CredAccess', 'C2', 'Exfil', 'Recon'];
     let drops = [];
     function initMatrix() {
