@@ -172,35 +172,18 @@
     }
     .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin-bottom: 3rem; }
-    .tool-card {
-      background: var(--panel); border: 1px solid var(--border); border-radius: 6px;
-      padding: 20px; display: flex; flex-direction: column; gap: 12px;
-      transition: border-color 0.2s, background 0.2s; position: relative; overflow: hidden;
-    }
-    .tool-card::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
-      opacity: 0; transition: opacity 0.2s;
-    }
-    .tool-card:hover { border-color: rgba(0, 212, 255, 0.35); background: rgba(0, 212, 255, 0.02); }
-    .tool-card:hover::before { opacity: 1; }
-    .tool-card.live { border-color: rgba(0, 212, 255, 0.3); }
-    .tool-card.live::before { opacity: 0.6; }
-    .card-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-    .card-icon { width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 16px; background: var(--surface); flex-shrink: 0; }
     .card-badge { font-size: 0.55rem; letter-spacing: 0.18em; padding: 3px 8px; border-radius: 2px; text-transform: uppercase; white-space: nowrap; }
     .badge-live { background: rgba(0, 212, 255, 0.1); color: #00d4ff; border: 1px solid rgba(0, 212, 255, 0.25); }
-    .card-name { font-family: 'Exo 2', sans-serif; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.1em; color: var(--text); }
-    .card-desc { font-family: 'Exo 2', sans-serif; font-weight: 400; font-size: 0.68rem; color: var(--text-dim); line-height: 1.6; flex: 1; }
-    .card-link {
-      font-family: 'Exo 2', sans-serif; font-weight: 600;
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: 0.62rem; letter-spacing: 0.12em; color: var(--accent);
-      padding: 6px 12px; border: 1px solid rgba(0, 212, 255, 0.3); border-radius: 3px;
-      transition: 0.15s; align-self: flex-start;
-    }
-    .card-link:hover { background: rgba(0, 212, 255, 0.08); }
+    .tool-feature{background:var(--panel);border:1px solid var(--border);border-radius:6px;padding:28px 28px 22px;margin-bottom:14px;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden;transition:border-color 0.2s,background 0.2s;}
+    .tool-feature::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:0.55;}
+    .tool-feature:hover{border-color:rgba(0,212,255,0.35);background:rgba(0,212,255,0.02);}
+    .tf-header{display:flex;align-items:center;justify-content:space-between;gap:8px;}
+    .tf-name{font-family:'Exo 2',sans-serif;font-weight:700;font-size:1rem;letter-spacing:0.14em;color:var(--text);}
+    .tf-tagline{font-family:'Exo 2',sans-serif;font-weight:300;font-size:0.8rem;color:var(--accent);letter-spacing:0.03em;}
+    .tf-body{font-family:'Exo 2',sans-serif;font-weight:400;font-size:0.71rem;color:var(--text-dim);line-height:1.8;max-width:600px;}
+    .tf-meta{font-family:'Share Tech Mono',monospace;font-size:0.57rem;letter-spacing:0.2em;color:var(--muted);border-top:1px solid var(--border-dim);padding-top:10px;margin-top:2px;}
+    .tf-link{font-family:'Exo 2',sans-serif;font-weight:600;display:inline-flex;align-items:center;gap:6px;font-size:0.63rem;letter-spacing:0.14em;color:var(--accent);padding:7px 14px;border:1px solid rgba(0,212,255,0.3);border-radius:3px;transition:0.15s;align-self:flex-start;margin-top:2px;}
+    .tf-link:hover{background:rgba(0,212,255,0.08);}
 
     .cap-strip {
       display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -214,10 +197,6 @@
     .cap-label { font-family: 'Share Tech Mono', monospace; font-size: 0.55rem; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; }
     .cap-value { font-family: 'Exo 2', sans-serif; font-weight: 600; font-size: 0.75rem; color: var(--text); letter-spacing: 0.04em; }
     .cap-value span { color: var(--accent); }
-
-    .card-features { display: flex; flex-direction: column; gap: 5px; margin-top: 2px; }
-    .card-feature { display: flex; align-items: center; gap: 7px; font-size: 0.62rem; color: var(--text-dim); }
-    .card-feature::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); opacity: 0.6; flex-shrink: 0; }
 
     .back-link {
       display: inline-flex; align-items: center; gap: 6px;
@@ -242,7 +221,6 @@
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
     @media(max-width:900px) { .nav-links { display: none; } .hamburger { display: flex; } .page { padding-left: 1.2rem; padding-right: 1.2rem; } }
-    @media(max-width:600px) { .tools-grid { grid-template-columns: 1fr; } }
     #scroll-sentinel{position:absolute;top:0;left:0;width:1px;height:10px;pointer-events:none;}
     .xv-nav-pill{display:flex;flex-direction:column;align-items:flex-start;gap:1px;margin-left:10px;padding-left:10px;border-left:1px solid var(--border);opacity:0;transform:translateX(-8px);pointer-events:none;transition:opacity .3s ease,transform .3s cubic-bezier(.4,0,.2,1);white-space:nowrap;flex-shrink:0;}
     .xv-pill-name{font-family:'Exo 2',sans-serif;font-weight:700;font-size:13px;letter-spacing:4px;line-height:1;}
@@ -391,22 +369,15 @@
 
     <div class="section-label">TOOLS</div>
 
-    <div class="tools-grid">
-      <div class="tool-card live">
-        <div class="card-header">
-          <div class="card-icon">⚡</div>
-          <span class="card-badge badge-live">LIVE</span>
-        </div>
-        <div class="card-name">TRACERULES</div>
-        <div class="card-desc">Coverage-mapped detection query arsenal for Sentinel, Splunk, and Palo Alto XDR. Every query tagged to MITRE ATT&CK technique and sub-technique. Filter by tactic, platform, or data source — copy-ready for immediate deployment.</div>
-        <div class="card-features">
-          <div class="card-feature">KQL · Sigma · XQL multi-platform coverage</div>
-          <div class="card-feature">MITRE ATT&CK tactic and technique tagging</div>
-          <div class="card-feature">Filter by data source, severity, and platform</div>
-          <div class="card-feature">Copy-ready — no reformatting needed</div>
-        </div>
-        <a class="card-link" href="https://h3ad-sec.github.io/TRACERULES/" target="_blank" rel="noopener">OPEN TRACERULES ↗</a>
+    <div class="tool-feature">
+      <div class="tf-header">
+        <div class="tf-name">TRACERULES</div>
+        <span class="card-badge badge-live">LIVE</span>
       </div>
+      <div class="tf-tagline">Detection Query Arsenal · KQL · Sigma · XQL</div>
+      <div class="tf-body">MITRE-mapped detection query arsenal organized by tactic, platform, and data source. Coverage spans ATT&CK techniques from Initial Access through Exfiltration.</div>
+      <div class="tf-meta">MITRE ATT&CK MAPPED · TACTIC-ORGANIZED · COPY-READY</div>
+      <a class="tf-link" href="https://h3ad-sec.github.io/TRACERULES/" target="_blank" rel="noopener">LAUNCH TRACERULES →</a>
     </div>
 
     <a class="back-link" href="https://h3ad-sec.github.io">← BACK TO H3AD-SEC PLATFORM</a>
