@@ -8,37 +8,49 @@
   <meta name="description"
     content="H3AD-DETECT by H3AD-SEC - Detection engineering platform with query arsenal, Sigma rules, SIEM queries, and ATT&CK coverage mapping.">
   <link rel="icon" href="https://h3ad-sec.github.io/fevicon.png?v=2026" type="image/png">
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #06080e;
-      --panel: #0b1018;
-      --panel-alt: #101824;
+      --bg: #080c14;
+      --panel: #0d1117;
+      --panel-alt: #111827;
       --surface: #18253a;
-      --text: #e2eeff;
+      --text: #e6edf3;
       --text-dim: #96b0cc;
-      --muted: #62809c;
+      --muted: #6b7280;
       --muted-dim: #3a5470;
-      --accent: #00ff9f;
-      --accent2: #4d94ff;
-      --border: #1e3050;
-      --border-dim: #121e30;
+      --accent: #00d4ff;
+      --accent2: #58a6ff;
+      --border: #1c2333;
+      --border-dim: #111827;
+      --primary:        #00d4ff;
+      --primary-dim:    rgba(0, 212, 255, 0.08);
+      --primary-glow:   rgba(0, 212, 255, 0.18);
+      --status-live:    #00d4ff;
+      --status-partial: #f59e0b;
+      --status-soon:    #2d3748;
       --nav-h: 48px;
     }
 
     body.light {
-      --bg: #eef2f8;
+      --bg: #f8fafc;
       --panel: #ffffff;
-      --panel-alt: #e4ecf6;
+      --panel-alt: #f1f5f9;
       --surface: #ccd8ec;
-      --text: #060e1c;
+      --text: #0d1117;
       --text-dim: #142540;
-      --muted: #2c4a6a;
+      --muted: #5c6b8a;
       --muted-dim: #5c7a9a;
-      --accent: #004db8;
-      --accent2: #007a55;
-      --border: #a0b8d4;
-      --border-dim: #c8d8ec;
+      --accent: #0284c7;
+      --accent2: #2563eb;
+      --border: #e2e8f0;
+      --border-dim: #f1f5f9;
+      --primary:        #0284c7;
+      --primary-dim:    rgba(2, 132, 199, 0.07);
+      --primary-glow:   rgba(2, 132, 199, 0.14);
+      --status-live:    #0284c7;
+      --status-partial: #d97706;
+      --status-soon:    #cbd5e1;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -46,21 +58,29 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Share Tech Mono', monospace;
+      font-family: 'Exo 2', sans-serif;
       font-size: 14px;
       line-height: 1.6;
       min-height: 100vh;
       overflow-x: hidden;
       transition: background 0.3s, color 0.3s;
     }
-    a { color: inherit; text-decoration: none; }
-
-    #matrix-canvas {
-      position: fixed; top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 0; pointer-events: none; opacity: 0.18;
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 45% at 50% 0%, rgba(0, 212, 255, 0.055) 0%, transparent 100%),
+        radial-gradient(ellipse 50% 35% at 5% 100%, rgba(88, 166, 255, 0.04) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
     }
-    body.light #matrix-canvas { opacity: 0.10; }
+    body.light::before {
+      background:
+        radial-gradient(ellipse 80% 45% at 50% 0%, rgba(2, 132, 199, 0.05) 0%, transparent 100%),
+        radial-gradient(ellipse 50% 35% at 5% 100%, rgba(37, 99, 235, 0.03) 0%, transparent 100%);
+    }
+    a { color: inherit; text-decoration: none; }
 
     .nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 50;
@@ -78,25 +98,27 @@
       display: flex; align-items: center; gap: 2px; overflow: visible;
     }
     .nav-links a {
+      font-family: 'Exo 2', sans-serif; font-weight: 500;
       font-size: 0.68rem; color: var(--muted);
       padding: 5px 9px; border-radius: 4px; border: 1px solid transparent;
       white-space: nowrap; transition: color 0.15s, border-color 0.15s, background 0.15s; flex-shrink: 0;
     }
-    .nav-links a:hover { color: var(--accent); border-color: var(--border); background: rgba(0,255,159,0.05); }
-    body.light .nav-links a:hover { background: rgba(0,77,184,0.07); }
-    .nav-links a.nav-current { color: var(--accent); border-color: var(--accent); background: rgba(0,255,159,0.06); }
-    body.light .nav-links a.nav-current { background: rgba(0,77,184,0.07); }
+    .nav-links a:hover { color: var(--accent); border-color: var(--border); background: rgba(0, 212, 255, 0.05); }
+    body.light .nav-links a:hover { background: rgba(2, 132, 199, 0.07); }
+    .nav-links a.nav-current { color: var(--accent); border-color: var(--accent); background: rgba(0, 212, 255, 0.06); }
+    body.light .nav-links a.nav-current { background: rgba(2, 132, 199, 0.07); }
     .nav-divider { width: 1px; height: 16px; background: var(--border); margin: 0 6px; flex-shrink: 0; opacity: 0.6; }
     .nav-item { position: relative; display: flex; align-items: center; }
     .nav-dropdown { display: none; position: absolute; top: 100%; left: 0; min-width: 130px; padding-top: 6px; z-index: 100; }
     .nav-dropdown-inner { background: var(--panel); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
     .nav-item:hover .nav-dropdown { display: block; }
     .nav-links .nav-dropdown a {
+      font-family: 'Exo 2', sans-serif; font-weight: 400;
       display: block; padding: 7px 12px; font-size: 0.65rem; color: var(--muted);
       border: none; border-left: 2px solid transparent; border-radius: 0; transition: 0.15s;
     }
     .nav-links .nav-dropdown a:hover, .nav-links .nav-dropdown a.nav-current {
-      color: var(--accent); border-left-color: var(--accent); background: rgba(0,255,159,0.04);
+      color: var(--accent); border-left-color: var(--accent); background: rgba(0, 212, 255, 0.04);
     }
     .theme-toggle { margin-left: auto; flex-shrink: 0; cursor: pointer; padding-left: 1rem; }
     .toggle-track { width: 42px; height: 22px; background: var(--border); border-radius: 50px; position: relative; transition: background 0.3s; }
@@ -110,18 +132,21 @@
       z-index: 49; padding: 0.75rem 1.25rem 1rem; flex-direction: column; gap: 2px;
     }
     .nav-drawer.open { display: flex; }
-    .nav-drawer a { font-size: 0.75rem; color: var(--text-dim); padding: 8px 10px; border-radius: 4px; border-left: 2px solid transparent; transition: 0.15s; }
-    .nav-drawer a:hover { color: var(--accent); border-left-color: var(--accent); background: rgba(0,255,159,0.04); }
+    .nav-drawer a {
+      font-family: 'Exo 2', sans-serif; font-weight: 500;
+      font-size: 0.75rem; color: var(--text-dim); padding: 8px 10px; border-radius: 4px; border-left: 2px solid transparent; transition: 0.15s;
+    }
+    .nav-drawer a:hover { color: var(--accent); border-left-color: var(--accent); background: rgba(0, 212, 255, 0.04); }
     .nav-drawer a.nav-current { color: var(--accent); border-left-color: var(--accent); }
     .drawer-sub { padding-left: 1.8rem !important; font-size: 0.7rem !important; opacity: 0.8; }
 
     .page { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; padding: calc(var(--nav-h) + 3rem) 2rem 7rem; }
 
     .hero { padding: 3rem 0 2rem; transition: transform .35s cubic-bezier(.4,0,.2,1), opacity .3s ease; }
-    .hero-tag { font-size: 0.6rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--accent); opacity: 0.75; display: block; margin-bottom: 1rem; }
-    .hero-title { font-size: clamp(1.4rem, 4vw, 2.6rem); color: var(--text); letter-spacing: 0.04em; line-height: 1.3; margin-bottom: 1rem; }
+    .hero-tag { font-family: 'Share Tech Mono', monospace; font-size: 0.6rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--accent); opacity: 0.75; display: block; margin-bottom: 1rem; }
+    .hero-title { font-family: 'Exo 2', sans-serif; font-weight: 700; font-size: clamp(1.4rem, 4vw, 2.6rem); color: var(--text); letter-spacing: 0.04em; line-height: 1.3; margin-bottom: 1rem; }
     .hero-title span { color: var(--accent); }
-    .hero-sub { font-size: 0.8rem; color: var(--text-dim); max-width: 560px; line-height: 1.8; margin-bottom: 2rem; }
+    .hero-sub { font-family: 'Exo 2', sans-serif; font-weight: 300; font-size: 0.8rem; color: var(--text-dim); max-width: 560px; line-height: 1.8; margin-bottom: 2rem; }
 
     .status-block {
       display: flex; align-items: center; gap: 10px;
@@ -133,10 +158,10 @@
       background: var(--accent); box-shadow: 0 0 6px var(--accent);
       flex-shrink: 0; animation: pulse 2.5s ease-in-out infinite;
     }
-    .status-dot.partial { background: #ffd60a; box-shadow: 0 0 6px #ffd60a; }
+    .status-dot.partial { background: #f59e0b; box-shadow: 0 0 6px #f59e0b; }
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
     .status-text { font-size: 0.65rem; letter-spacing: 0.14em; color: var(--accent); }
-    .status-text.partial { color: #ffd60a; }
+    .status-text.partial { color: #f59e0b; }
     .status-sep { color: var(--border); margin: 0 4px; }
     .status-meta { font-size: 0.63rem; color: var(--muted); }
 
@@ -158,34 +183,41 @@
       background: linear-gradient(90deg, transparent, var(--accent), transparent);
       opacity: 0; transition: opacity 0.2s;
     }
-    .tool-card:hover { border-color: rgba(0,255,159,0.35); background: rgba(0,255,159,0.02); }
+    .tool-card:hover { border-color: rgba(0, 212, 255, 0.35); background: rgba(0, 212, 255, 0.02); }
     .tool-card:hover::before { opacity: 1; }
-    .tool-card.live { border-color: rgba(0,255,159,0.3); }
+    .tool-card.live { border-color: rgba(0, 212, 255, 0.3); }
     .tool-card.live::before { opacity: 0.6; }
     .card-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
     .card-icon { width: 32px; height: 32px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 16px; background: var(--surface); flex-shrink: 0; }
     .card-badge { font-size: 0.55rem; letter-spacing: 0.18em; padding: 3px 8px; border-radius: 2px; text-transform: uppercase; white-space: nowrap; }
-    .badge-live { background: rgba(0,255,159,0.12); color: var(--accent); border: 1px solid rgba(0,255,159,0.3); }
-    .card-name { font-size: 0.8rem; letter-spacing: 0.1em; color: var(--text); }
-    .card-desc { font-size: 0.68rem; color: var(--text-dim); line-height: 1.6; flex: 1; }
+    .badge-live { background: rgba(0, 212, 255, 0.1); color: #00d4ff; border: 1px solid rgba(0, 212, 255, 0.25); }
+    .card-name { font-family: 'Exo 2', sans-serif; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.1em; color: var(--text); }
+    .card-desc { font-family: 'Exo 2', sans-serif; font-weight: 400; font-size: 0.68rem; color: var(--text-dim); line-height: 1.6; flex: 1; }
     .card-link {
+      font-family: 'Exo 2', sans-serif; font-weight: 600;
       display: inline-flex; align-items: center; gap: 6px;
       font-size: 0.62rem; letter-spacing: 0.12em; color: var(--accent);
-      padding: 6px 12px; border: 1px solid rgba(0,255,159,0.3); border-radius: 3px;
+      padding: 6px 12px; border: 1px solid rgba(0, 212, 255, 0.3); border-radius: 3px;
       transition: 0.15s; align-self: flex-start;
     }
-    .card-link:hover { background: rgba(0,255,159,0.08); }
+    .card-link:hover { background: rgba(0, 212, 255, 0.08); }
 
-    .terminal-block {
-      background: var(--panel); border: 1px solid var(--border);
-      border-radius: 4px; padding: 1.2rem 1.4rem; margin-bottom: 2.5rem;
+    .cap-strip {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1px; background: var(--border); border: 1px solid var(--border);
+      border-radius: 6px; overflow: hidden; margin-bottom: 2.5rem;
     }
-    .term-line { font-size: 0.68rem; color: var(--muted); line-height: 2; display: flex; align-items: baseline; gap: 8px; }
-    .term-prompt { color: var(--accent); flex-shrink: 0; }
-    .term-cmd { color: var(--text-dim); }
-    .term-comment { color: var(--muted-dim); }
-    .term-out { color: var(--text); }
-    .term-accent { color: var(--accent); }
+    .cap-item {
+      background: var(--panel); padding: 14px 18px;
+      display: flex; flex-direction: column; gap: 5px;
+    }
+    .cap-label { font-family: 'Share Tech Mono', monospace; font-size: 0.55rem; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; }
+    .cap-value { font-family: 'Exo 2', sans-serif; font-weight: 600; font-size: 0.75rem; color: var(--text); letter-spacing: 0.04em; }
+    .cap-value span { color: var(--accent); }
+
+    .card-features { display: flex; flex-direction: column; gap: 5px; margin-top: 2px; }
+    .card-feature { display: flex; align-items: center; gap: 7px; font-size: 0.62rem; color: var(--text-dim); }
+    .card-feature::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--accent); opacity: 0.6; flex-shrink: 0; }
 
     .back-link {
       display: inline-flex; align-items: center; gap: 6px;
@@ -193,7 +225,7 @@
       padding: 8px 14px; border: 1px solid var(--border); border-radius: 4px;
       transition: 0.15s; margin-bottom: 3rem;
     }
-    .back-link:hover { color: var(--accent); border-color: rgba(0,255,159,0.4); }
+    .back-link:hover { color: var(--accent); border-color: rgba(0, 212, 255, 0.4); }
 
     footer {
       position: relative; z-index: 1;
@@ -213,10 +245,10 @@
     @media(max-width:600px) { .tools-grid { grid-template-columns: 1fr; } }
     #scroll-sentinel{position:absolute;top:0;left:0;width:1px;height:10px;pointer-events:none;}
     .xv-nav-pill{display:flex;flex-direction:column;align-items:flex-start;gap:1px;margin-left:10px;padding-left:10px;border-left:1px solid var(--border);opacity:0;transform:translateX(-8px);pointer-events:none;transition:opacity .3s ease,transform .3s cubic-bezier(.4,0,.2,1);white-space:nowrap;flex-shrink:0;}
-    .xv-pill-name{font-family:'Share Tech Mono',monospace;font-size:13px;letter-spacing:4px;line-height:1;}
+    .xv-pill-name{font-family:'Exo 2',sans-serif;font-weight:700;font-size:13px;letter-spacing:4px;line-height:1;}
     .xv-pill-accent{color:var(--accent);}
     .xv-pill-text{color:var(--text);}
-    .xv-pill-tagline{font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:1.5px;}
+    .xv-pill-tagline{font-family:'Exo 2',sans-serif;font-weight:400;font-size:8px;color:var(--muted);letter-spacing:1.5px;}
     body.hero-hidden .xv-nav-pill{opacity:1;transform:translateX(0);pointer-events:auto;}
     body.hero-hidden .hero{transform:translateY(-100%);opacity:0;pointer-events:none;}
     body.hero-hidden .page{padding-top:calc(var(--nav-h) + 20px);}
@@ -231,7 +263,6 @@
 
 <body class="dark">
   <div id="scroll-sentinel" aria-hidden="true"></div>
-  <canvas id="matrix-canvas"></canvas>
 
   <nav class="nav">
     <div class="hamburger" id="hamburger" onclick="toggleDrawer()">
@@ -327,23 +358,35 @@
 
   <div class="page">
     <div class="hero">
-      <span class="hero-tag">H3AD-SEC / DETECTION ENGINEERING</span>
-      <h1 class="hero-title">H3AD-<span>DETECT</span></h1>
-      <p class="hero-sub">Detection engineering platform for building, organizing, and deploying detection logic across SIEM and EDR stacks. Query arsenal, Sigma rules, and ATT&CK-aligned coverage — built for analysts who write detections that fire.</p>
+      <span class="hero-tag">DETECTION ENGINEERING MODULE</span>
+      <h1 class="hero-title">Write Detections That Match<br><span>Adversary Behavior.</span></h1>
+      <p class="hero-sub">Structure your detection library around how adversaries operate — not how vendors document them. Coverage-mapped queries across KQL, Sigma, and XQL, aligned to MITRE ATT&CK and organized by tactic, technique, and data source.</p>
     </div>
 
     <div class="status-block">
       <div class="status-dot partial"></div>
       <span class="status-text partial">PARTIAL</span>
       <span class="status-sep">//</span>
-      <span class="status-meta">TRACERULES — QUERY ARSENAL LIVE</span>
+      <span class="status-meta">TRACERULES LIVE — MORE TOOLS COMING</span>
     </div>
 
-    <div class="terminal-block">
-      <div class="term-line"><span class="term-prompt">$</span><span class="term-cmd">h3addetect --status</span></div>
-      <div class="term-line"><span class="term-prompt">&gt;</span><span class="term-out">Module: <span class="term-accent">H3AD-DETECT</span> — Detection Engineering</span></div>
-      <div class="term-line"><span class="term-prompt">&gt;</span><span class="term-out">TRACERULES: <span class="term-accent">LIVE</span> — KQL · Sigma · XQL query arsenal with MITRE ATT&CK tagging</span></div>
-      <div class="term-line"><span class="term-prompt">&gt;</span><span class="term-comment"># Write detections against how adversaries operate — behavior-first, noise-aware.</span></div>
+    <div class="cap-strip">
+      <div class="cap-item">
+        <span class="cap-label">Query Languages</span>
+        <span class="cap-value"><span>KQL</span> · Sigma · XQL</span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-label">Framework</span>
+        <span class="cap-value">MITRE <span>ATT&CK</span></span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-label">Platforms</span>
+        <span class="cap-value">Sentinel · Splunk · XDR</span>
+      </div>
+      <div class="cap-item">
+        <span class="cap-label">Coverage</span>
+        <span class="cap-value">Tactic-<span>Aligned</span></span>
+      </div>
     </div>
 
     <div class="section-label">TOOLS</div>
@@ -355,7 +398,13 @@
           <span class="card-badge badge-live">LIVE</span>
         </div>
         <div class="card-name">TRACERULES</div>
-        <div class="card-desc">Detection query arsenal with full MITRE ATT&CK tagging. KQL, Sigma, and XQL queries organized by tactic, technique, and data source. Searchable, filterable, copy-ready. Detection Query Arsenal.</div>
+        <div class="card-desc">Coverage-mapped detection query arsenal for Sentinel, Splunk, and Palo Alto XDR. Every query tagged to MITRE ATT&CK technique and sub-technique. Filter by tactic, platform, or data source — copy-ready for immediate deployment.</div>
+        <div class="card-features">
+          <div class="card-feature">KQL · Sigma · XQL multi-platform coverage</div>
+          <div class="card-feature">MITRE ATT&CK tactic and technique tagging</div>
+          <div class="card-feature">Filter by data source, severity, and platform</div>
+          <div class="card-feature">Copy-ready — no reformatting needed</div>
+        </div>
         <a class="card-link" href="https://h3ad-sec.github.io/TRACERULES/" target="_blank" rel="noopener">OPEN TRACERULES ↗</a>
       </div>
     </div>
@@ -400,35 +449,6 @@
 
     /* ── HERO SCROLL HIDE ── */
     (function(){var s=document.getElementById('scroll-sentinel');if(!s)return;new IntersectionObserver(function(e){document.body.classList.toggle('hero-hidden',!e[0].isIntersecting);},{threshold:0}).observe(s);})();
-
-    const canvas = document.getElementById('matrix-canvas');
-    const ctx = canvas.getContext('2d');
-    const chars = ['KQL', 'Sigma', 'XQL', 'YARA', 'ATT&CK', 'T1059', 'T1003', 'T1047', 'T1566', 'T1071',
-      'T1055', 'T1082', 'T1021', 'T1053', 'T1078', 'Detect', 'Alert', 'Rule', 'Query', 'Baseline',
-      'SIEM', 'EDR', 'EventLog', '4688', '4624', '4625', '4768', 'Sysmon', 'ETW', 'DeviceEvents',
-      'TRACERULES', 'H3AD-DETECT', 'H3AD-SEC', 'TA0002', 'TA0003', 'TA0006', 'TA0008', 'TA0011',
-      'Execution', 'Persistence', 'LateralMove', 'CredAccess', 'C2', 'Exfil', 'Recon'];
-    let drops = [];
-    function initMatrix() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      drops = Array(Math.floor(window.innerWidth / 18)).fill(1);
-    }
-    function drawMatrix() {
-      const l = document.body.classList.contains('light');
-      ctx.fillStyle = l ? 'rgba(238,242,248,0.08)' : 'rgba(0,0,0,0.12)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = l ? '#004db8' : '#00ff9f';
-      ctx.font = '12px monospace';
-      for (let i = 0; i < drops.length; i++) {
-        ctx.fillText(chars[Math.floor(Math.random() * chars.length)], i * 18, drops[i] * 18);
-        if (drops[i] * 18 > canvas.height && Math.random() > 0.975) drops[i] = 0;
-        drops[i]++;
-      }
-    }
-    window.addEventListener('resize', initMatrix);
-    initMatrix();
-    setInterval(drawMatrix, 45);
   </script>
 </body>
 
