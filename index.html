@@ -221,6 +221,25 @@
     ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
     @media(max-width:900px) { .nav-links { display: none; } .hamburger { display: flex; } .page { padding-left: 1.2rem; padding-right: 1.2rem; } }
+
+    @media(max-width:640px) {
+      .page {
+        padding: calc(var(--nav-h) + 1rem) 1rem 4rem;
+      }
+      footer {
+        padding: 1.2rem 1rem;
+      }
+      .tool-feature { padding: 20px 18px 16px; }
+    }
+
+    @media(max-width:480px) {
+      .page {
+        padding: calc(var(--nav-h) + 0.75rem) 0.9rem 3rem;
+      }
+      .cap-strip { grid-template-columns: repeat(2, 1fr); }
+      .tf-meta { word-break: break-word; white-space: normal; }
+      .hero-sub { font-size: 0.75rem; }
+    }
     #scroll-sentinel{position:absolute;top:0;left:0;width:1px;height:10px;pointer-events:none;}
     .xv-nav-pill{display:flex;flex-direction:column;align-items:flex-start;gap:1px;margin-left:10px;padding-left:10px;border-left:1px solid var(--border);opacity:0;transform:translateX(-8px);pointer-events:none;transition:opacity .3s ease,transform .3s cubic-bezier(.4,0,.2,1);white-space:nowrap;flex-shrink:0;}
     .xv-pill-name{font-family:'Exo 2',sans-serif;font-weight:700;font-size:13px;letter-spacing:4px;line-height:1;}
